@@ -58,7 +58,7 @@ export const WORD_CONFIG: Record<Difficulty, {
   clusterSize: number;       // how many letters in a cluster batch
 }> = {
   easy: {
-    spawnInterval: 1400,
+    spawnInterval: 1100,
     bubbleSpeedMin: 16000,
     bubbleSpeedMax: 22000,
     maxBubbles: 45,

@@ -155,14 +155,36 @@ const styles = StyleSheet.create({
   },
 });
 
+// Track recent X positions to spread bubbles out
+let recentXSlots: number[] = [];
+
 export function createBubble(letter: string, id?: string): BubbleData {
-  const padding = BUBBLE_SIZE;
-  const maxX = require('react-native').Dimensions.get('window').width - padding * 2;
+  const screenW = require('react-native').Dimensions.get('window').width;
+  const padding = BUBBLE_SIZE * 0.6;
+  const usable = screenW - padding * 2;
+
+  // Divide screen into columns and pick one that wasn't recently used
+  const cols = Math.floor(usable / (BUBBLE_SIZE + 10));
+  const slotWidth = usable / cols;
+  const available = Array.from({ length: cols }, (_, i) => i)
+    .filter(i => !recentXSlots.includes(i));
+  const slot = available.length > 0
+    ? available[Math.floor(Math.random() * available.length)]
+    : Math.floor(Math.random() * cols);
+
+  recentXSlots.push(slot);
+  if (recentXSlots.length > Math.max(2, Math.floor(cols / 2))) {
+    recentXSlots.shift();
+  }
+
+  // Add a little jitter within the slot so it's not perfectly grid-aligned
+  const jitter = (Math.random() - 0.5) * slotWidth * 0.3;
+  const x = padding + slot * slotWidth + slotWidth / 2 - BUBBLE_SIZE / 2 + jitter;
 
   return {
     id: id || `${Date.now()}-${Math.random().toString(36).substr(2, 5)}`,
     letter,
-    x: padding / 2 + Math.random() * maxX,
+    x: Math.max(4, Math.min(x, screenW - BUBBLE_SIZE - 4)),
     color: BUBBLE_COLORS[Math.floor(Math.random() * BUBBLE_COLORS.length)],
     speed: 5000 + Math.random() * 3000,
   };

@@ -123,13 +123,19 @@ export default function WordScreen({ difficulty, onBack }: Props) {
       });
     };
 
-    // Immediate burst: spawn 5-8 letters right away so the board isn't empty
-    const initialBurst: BubbleData[] = [];
-    const burstCount = 5 + Math.floor(Math.random() * 4);
+    // Rapid staggered burst: spawn letters quickly one at a time so they spread vertically
+    const burstCount = 6 + Math.floor(Math.random() * 3);
     for (let i = 0; i < burstCount; i++) {
-      initialBurst.push(spawnOne());
+      setTimeout(() => {
+        if (!gameOver) {
+          const bubble = spawnOne();
+          setBubbles(prev => {
+            if (prev.length >= config.maxBubbles) return prev;
+            return [...prev, bubble];
+          });
+        }
+      }, i * 250); // 250ms apart — fast but not all at once
     }
-    setBubbles(prev => [...prev, ...initialBurst]);
 
     spawn();
     const interval = setInterval(spawn, config.spawnInterval);
