@@ -11,10 +11,17 @@ let _muted = false;
 
 function getCtx(): AudioContext | null {
   if (Platform.OS !== 'web') return null;
-  if (!audioCtx) {
-    audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
+  try {
+    if (!audioCtx) {
+      const AC = window.AudioContext || (window as any).webkitAudioContext;
+      if (!AC) return null;
+      audioCtx = new AC();
+    }
+    return audioCtx;
+  } catch {
+    // In-app browsers may block AudioContext entirely
+    return null;
   }
-  return audioCtx;
 }
 
 // ── Public API ───────────────────────────────────────────────

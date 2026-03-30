@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no, viewport-fit=cover" />
+
+    <!-- Force real browser on iOS when shared via iMessage/WhatsApp/Instagram -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="theme-color" content="#1a1a2e" />
+
+    <!-- Open Graph tags so the link shows a nice preview -->
+    <meta property="og:title" content="Letter Pop" />
+    <meta property="og:description" content="Pop, Learn & Spell! A fun bubble letter game for kids." />
+    <meta property="og:type" content="website" />
+
+    <title>Letter Pop</title>
+
+    <style id="expo-reset">
+      html, body { height: 100%; margin: 0; padding: 0; }
+      body {
+        overflow: hidden;
+        background-color: #1a1a2e;
+        -webkit-tap-highlight-color: transparent;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        user-select: none;
+        touch-action: manipulation;
+      }
+      #root { display: flex; height: 100%; flex: 1; }
+    </style>
+    <link rel="icon" href="/favicon.ico" />
+  </head>
+
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+
+    <script>
+      // Detect in-app browser and prompt to open in real browser
+      (function() {
+        var ua = navigator.userAgent || '';
+        var isInApp = /FBAN|FBAV|Instagram|Line|WhatsApp|Snapchat|Twitter|LinkedIn/i.test(ua);
+        // iOS in-app webviews that aren't Safari
+        var isIOSWebview = /iPhone|iPad|iPod/.test(ua) && !window.navigator.standalone && !/Safari/i.test(ua);
+
+        if (isInApp || isIOSWebview) {
+          document.getElementById('root').innerHTML =
+            '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;padding:40px;text-align:center;font-family:-apple-system,sans-serif;color:white;background:#1a1a2e;">' +
+              '<div style="font-size:60px;margin-bottom:16px;">🫧</div>' +
+              '<h1 style="font-size:28px;margin:0 0 8px;">Letter Pop</h1>' +
+              '<p style="font-size:16px;color:#B0B0D0;margin:0 0 24px;">For the best experience, open in your browser</p>' +
+              '<a href="' + window.location.href + '" target="_blank" rel="noopener" style="background:#4ECDC4;color:white;padding:14px 32px;border-radius:30px;text-decoration:none;font-size:18px;font-weight:700;">Open in Browser</a>' +
+              '<p style="font-size:13px;color:#888;margin-top:16px;">Or copy this link and paste in Safari/Chrome</p>' +
+            '</div>';
+        }
+      })();
+    </script>
+  </body>
+</html>
