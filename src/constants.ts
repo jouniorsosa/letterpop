@@ -1,10 +1,16 @@
-import { Dimensions } from 'react-native';
+import { Dimensions, Platform } from 'react-native';
 
 const { width, height } = Dimensions.get('window');
 
 export const SCREEN_WIDTH = width;
 export const SCREEN_HEIGHT = height;
-export const BUBBLE_SIZE = 85;
+
+// Responsive sizing — scales for phones, tablets, and iPads
+const isTablet = Math.min(width, height) >= 600;
+const isLargeTablet = Math.min(width, height) >= 768;
+export const SCALE = isLargeTablet ? 1.3 : isTablet ? 1.15 : 1;
+export const BUBBLE_SIZE = Math.round((isLargeTablet ? 100 : isTablet ? 92 : 85) * 1);
+export const FONT_SCALE = SCALE;
 
 export type Difficulty = 'easy' | 'medium' | 'hard';
 
@@ -58,26 +64,26 @@ export const WORD_CONFIG: Record<Difficulty, {
   clusterSize: number;       // how many letters in a cluster batch
 }> = {
   easy: {
-    spawnInterval: 1100,
-    bubbleSpeedMin: 16000,
-    bubbleSpeedMax: 22000,
+    spawnInterval: 1800,
+    bubbleSpeedMin: 24000,
+    bubbleSpeedMax: 32000,
     maxBubbles: 45,
     clusterChance: 0.75,
     clusterSize: 3,
   },
   medium: {
-    spawnInterval: 1600,
-    bubbleSpeedMin: 7000,
-    bubbleSpeedMax: 10000,
-    maxBubbles: 28,
+    spawnInterval: 1400,
+    bubbleSpeedMin: 12000,
+    bubbleSpeedMax: 16000,
+    maxBubbles: 32,
     clusterChance: 0.5,
     clusterSize: 4,
   },
   hard: {
-    spawnInterval: 1100,
-    bubbleSpeedMin: 4500,
-    bubbleSpeedMax: 7000,
-    maxBubbles: 24,
+    spawnInterval: 1000,
+    bubbleSpeedMin: 6000,
+    bubbleSpeedMax: 9000,
+    maxBubbles: 26,
     clusterChance: 0.35,
     clusterSize: 5,
   },

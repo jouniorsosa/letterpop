@@ -7,7 +7,7 @@ import {
   View,
   Platform,
 } from 'react-native';
-import { BUBBLE_SIZE, SCREEN_HEIGHT, BUBBLE_COLORS } from '../constants';
+import { BUBBLE_SIZE, SCREEN_HEIGHT, BUBBLE_COLORS, FONT_SCALE } from '../constants';
 
 const useNative = Platform.OS !== 'web';
 
@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255, 255, 255, 0.4)',
   },
   letter: {
-    fontSize: 34,
+    fontSize: Math.round(34 * FONT_SCALE),
     fontWeight: 'bold',
     color: '#FFFFFF',
     textShadowColor: 'rgba(0, 0, 0, 0.3)',

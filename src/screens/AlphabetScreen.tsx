@@ -218,7 +218,7 @@ const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#1a1a2e' },
   header: {
     flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center',
-    paddingHorizontal: 20, paddingTop: 50, paddingBottom: 10, zIndex: 10,
+    paddingHorizontal: 20, paddingTop: 12, paddingBottom: 10, zIndex: 10,
   },
   backButton: { padding: 8 },
   backText: { color: '#B0B0D0', fontSize: 16, fontWeight: '600' },

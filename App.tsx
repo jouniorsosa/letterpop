@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
+import { SafeAreaView, StyleSheet, Platform } from 'react-native';
 import HomeScreen from './src/screens/HomeScreen';
 import AlphabetScreen from './src/screens/AlphabetScreen';
 import WordScreen from './src/screens/WordScreen';
@@ -17,7 +18,7 @@ export default function App() {
   };
 
   return (
-    <>
+    <SafeAreaView style={styles.safeArea}>
       <StatusBar style="light" />
       {screen === 'home' && (
         <HomeScreen onSelectMode={handleSelectMode} />
@@ -28,6 +29,13 @@ export default function App() {
       {screen === 'word' && (
         <WordScreen difficulty={difficulty} onBack={() => setScreen('home')} />
       )}
-    </>
+    </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: '#1a1a2e',
+  },
+});

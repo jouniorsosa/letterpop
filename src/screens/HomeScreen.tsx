@@ -8,7 +8,7 @@ import {
   StatusBar,
   Platform,
 } from 'react-native';
-import { Difficulty, SCREEN_WIDTH, SCREEN_HEIGHT, BUBBLE_COLORS } from '../constants';
+import { Difficulty, SCREEN_WIDTH, SCREEN_HEIGHT, BUBBLE_COLORS, FONT_SCALE, SCALE } from '../constants';
 import { startHomeMusic, stopAllMusic, resumeAudio, isMuted, toggleMute, playPop } from '../game/sounds';
 
 interface Props {
@@ -227,7 +227,7 @@ export default function HomeScreen({ onSelectMode }: Props) {
 
 const styles = StyleSheet.create({
   muteButton: {
-    position: 'absolute', top: 50, right: 20, zIndex: 20,
+    position: 'absolute', top: 12, right: 20, zIndex: 20,
     width: 44, height: 44, borderRadius: 22,
     backgroundColor: 'rgba(255,255,255,0.15)',
     justifyContent: 'center', alignItems: 'center',
@@ -237,29 +237,29 @@ const styles = StyleSheet.create({
     flex: 1, backgroundColor: '#1a1a2e',
     justifyContent: 'center', alignItems: 'center', overflow: 'hidden',
   },
-  titleContainer: { alignItems: 'center', marginBottom: 50, zIndex: 10 },
-  titleEmoji: { fontSize: 60, marginBottom: 10 },
+  titleContainer: { alignItems: 'center', marginBottom: Math.round(50 * SCALE), zIndex: 10 },
+  titleEmoji: { fontSize: Math.round(60 * FONT_SCALE), marginBottom: 10 },
   title: {
-    fontSize: 52, fontWeight: '900', color: '#FFFFFF',
+    fontSize: Math.round(52 * FONT_SCALE), fontWeight: '900', color: '#FFFFFF',
     textShadowColor: '#4ECDC4', textShadowOffset: { width: 0, height: 0 },
     textShadowRadius: 20, letterSpacing: 2,
   },
-  subtitle: { fontSize: 18, color: '#B0B0D0', marginTop: 8, fontWeight: '500', letterSpacing: 1 },
-  buttonsContainer: { width: SCREEN_WIDTH > 500 ? 400 : SCREEN_WIDTH * 0.85, zIndex: 10 },
+  subtitle: { fontSize: Math.round(18 * FONT_SCALE), color: '#B0B0D0', marginTop: 8, fontWeight: '500', letterSpacing: 1 },
+  buttonsContainer: { width: SCREEN_WIDTH > 768 ? 500 : SCREEN_WIDTH > 500 ? 420 : SCREEN_WIDTH * 0.85, zIndex: 10 },
   modeButton: {
-    borderRadius: 20, padding: 24, alignItems: 'center', marginBottom: 20,
+    borderRadius: 20, padding: Math.round(24 * SCALE), alignItems: 'center', marginBottom: 20,
     elevation: 8, shadowColor: '#000', shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3, shadowRadius: 8,
   },
   alphabetButton: { backgroundColor: '#4ECDC4' },
   wordButton: { backgroundColor: '#FF6B6B' },
-  modeEmoji: { fontSize: 36, marginBottom: 8 },
-  modeTitle: { fontSize: 26, fontWeight: '800', color: '#FFFFFF', marginBottom: 6 },
-  modeDesc: { fontSize: 14, color: 'rgba(255,255,255,0.85)', textAlign: 'center', lineHeight: 20 },
+  modeEmoji: { fontSize: Math.round(36 * FONT_SCALE), marginBottom: 8 },
+  modeTitle: { fontSize: Math.round(26 * FONT_SCALE), fontWeight: '800', color: '#FFFFFF', marginBottom: 6 },
+  modeDesc: { fontSize: Math.round(14 * FONT_SCALE), color: 'rgba(255,255,255,0.85)', textAlign: 'center', lineHeight: Math.round(20 * FONT_SCALE) },
 
   // Difficulty picker
   pickerContainer: {
-    width: SCREEN_WIDTH > 500 ? 420 : SCREEN_WIDTH * 0.9,
+    width: SCREEN_WIDTH > 768 ? 500 : SCREEN_WIDTH > 500 ? 420 : SCREEN_WIDTH * 0.9,
     alignItems: 'center', zIndex: 10,
   },
   pickerTitle: { fontSize: 32, fontWeight: '900', color: '#FFFFFF', marginBottom: 4 },

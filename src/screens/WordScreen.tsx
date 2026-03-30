@@ -134,7 +134,7 @@ export default function WordScreen({ difficulty, onBack }: Props) {
             return [...prev, bubble];
           });
         }
-      }, i * 250); // 250ms apart — fast but not all at once
+      }, i * 350); // 350ms apart — quick but spread out
     }
 
     spawn();
@@ -377,7 +377,7 @@ const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#1a1a2e' },
   header: {
     flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center',
-    paddingHorizontal: 16, paddingTop: 50, paddingBottom: 10, zIndex: 10,
+    paddingHorizontal: 16, paddingTop: 12, paddingBottom: 10, zIndex: 10,
   },
   backButton: { padding: 8 },
   backText: { color: '#B0B0D0', fontSize: 16, fontWeight: '600' },
