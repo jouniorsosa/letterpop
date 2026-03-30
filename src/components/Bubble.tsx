@@ -88,36 +88,47 @@ export default function Bubble({ data, onPress, shouldStop, highlight }: BubbleP
     });
   };
 
+  // Extra padding around the bubble so taps near the edge still register
+  const extraHit = Math.round(BUBBLE_SIZE * 0.25);
+
   return (
-    <TouchableWithoutFeedback onPress={handlePress}>
-      <Animated.View
-        style={[
-          styles.bubble,
-          {
-            left: data.x,
-            backgroundColor: data.color,
-            transform: [
-              { translateY },
-              { translateX: wobble },
-              { scale },
-            ],
-            opacity,
-            borderWidth: highlight ? 3 : 0,
-            borderColor: highlight ? '#FFD700' : 'transparent',
-          },
-          data.selected && styles.selected,
-        ]}
+    <Animated.View
+      style={{
+        position: 'absolute',
+        left: data.x - extraHit,
+        width: BUBBLE_SIZE + extraHit * 2,
+        height: BUBBLE_SIZE + extraHit * 2,
+        transform: [{ translateY }, { translateX: wobble }, { scale }],
+        opacity,
+      }}
+    >
+      <TouchableWithoutFeedback
+        onPress={handlePress}
+        hitSlop={{ top: 15, bottom: 15, left: 15, right: 15 }}
       >
-        <View style={styles.shine} />
-        <Text style={styles.letter}>{data.letter}</Text>
-      </Animated.View>
-    </TouchableWithoutFeedback>
+        <View
+          style={[
+            styles.bubble,
+            {
+              marginTop: extraHit,
+              marginLeft: extraHit,
+              backgroundColor: data.color,
+              borderWidth: highlight ? 3 : 0,
+              borderColor: highlight ? '#FFD700' : 'transparent',
+            },
+            data.selected && styles.selected,
+          ]}
+        >
+          <View style={styles.shine} />
+          <Text style={styles.letter}>{data.letter}</Text>
+        </View>
+      </TouchableWithoutFeedback>
+    </Animated.View>
   );
 }
 
 const styles = StyleSheet.create({
   bubble: {
-    position: 'absolute',
     width: BUBBLE_SIZE,
     height: BUBBLE_SIZE,
     borderRadius: BUBBLE_SIZE / 2,
