@@ -151,21 +151,31 @@ export default function WordScreen({ difficulty, onBack }: Props) {
     Animated.timing(messageAnim, { toValue: 0, duration: 1500, useNativeDriver: useNative }).start(() => setMessage(''));
   };
 
+  // Build the current word from selectedIds so it's always in sync
+  const buildWordFromIds = (ids: string[]): string => {
+    return ids
+      .map(sid => bubblesRef.current.find(b => b.id === sid))
+      .filter(Boolean)
+      .map(b => b!.letter)
+      .join('');
+  };
+
   const handleBubblePress = useCallback((id: string) => {
     playPop();
     const bubble = bubblesRef.current.find(b => b.id === id);
     if (!bubble) return;
 
     if (selectedIdsRef.current.includes(id)) {
-      setSelectedIds(prev => prev.filter(sid => sid !== id));
-      setCurrentWord(prev => {
-        const idx = prev.lastIndexOf(bubble.letter);
-        return idx >= 0 ? prev.slice(0, idx) + prev.slice(idx + 1) : prev;
-      });
+      // Deselect: remove this specific bubble ID
+      const newIds = selectedIdsRef.current.filter(sid => sid !== id);
+      setSelectedIds(newIds);
+      setCurrentWord(buildWordFromIds(newIds));
       setBubbles(prev => prev.map(b => b.id === id ? { ...b, selected: false } : b));
     } else {
-      setSelectedIds(prev => [...prev, id]);
-      setCurrentWord(prev => prev + bubble.letter);
+      // Select: append this bubble ID
+      const newIds = [...selectedIdsRef.current, id];
+      setSelectedIds(newIds);
+      setCurrentWord(buildWordFromIds(newIds));
       setBubbles(prev => prev.map(b => b.id === id ? { ...b, selected: true } : b));
     }
   }, []);
